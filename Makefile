@@ -9,42 +9,29 @@ MAGENTA = \033[0;95m
 CYAN = \033[0;96m
 WHITE = \033[0;97m
 
-### VARIABLES ###
+### RULES ###
 
-NAME = ircserv
-CC = c++
-CFLAGS += -Wall -Wextra -Werror -Iinclude -std=c++98 -ggdb3
-OBJF = .cache_exists	# needed to create obj/ directory
-.DEFAULT_GOAL := all	# make = make all
-update_flag := false
+all :
+	docker-compose -f ./srcs/docker-compose.yml up --build -d
 
-# Directories
-OBJ_DIR = obj/
-SRC_DIR = src/
+stop :
+	docker-compose -f ./srcs/docker-compose.yml stop
 
-# Source Files
-SRC_FILES = main.cpp Server.cpp Client.cpp Channel.cpp ServerCommands.cpp ServerOpCommands.cpp ServerChannels.cpp mode.cpp ServerUtils.cpp utils.cpp
+start :
+	docker-compose -f ./srcs/docker-compose.yml start
 
-# Object Files
-OBJ = $(addprefix $(OBJ_DIR), $(SRC_FILES:.cpp=.o))
+status :
+	docker ps
 
-### COMPILATION ###
+clean :
+	docker-compose -f ./srcs/docker-compose.yml down --volumes
 
-$(OBJF):
-	@mkdir -p $(OBJ_DIR)
+fclean : clean
+	docker system prune -af
 
-# Creating object files (.o) from source files (.c) inside the OBJ_DIR directory.
-# The option -o indicates the name of the outpout, the option -c indicates the source that is used.
+re : fclean all
 
-$(OBJ_DIR)%.o : $(SRC_DIR)%.cpp | $(OBJF)
-	@echo "$(YELLOW)Compiling $<...$(DEF_COLOR)"
-	@$(CC) $(CFLAGS) -c $< -o $@
-
-# Compiling all objets files (.o) to a file "NAME" :
-$(NAME) : $(OBJ)
-	@$(CC) $(CFLAGS) $^ -o $@
-	@echo "$(GREEN)>>> $(NAME) compiled!$(DEF_COLOR)"
-	@$(eval update_flag := true)
+.PHONY: all stop clean fclean re
 
 ### MEMO ###
 # 	Special variables :
@@ -53,39 +40,3 @@ $(NAME) : $(OBJ)
 #		$^	Represents all the dependencies of the rule, separated by spaces.
 #		$?	Represents a list of dependencies that are newer than the target file.
 #		$*	Represents the stem of the target filename (without the extension)
-
-### RULES ###
-
-nothing_to_be_done:
-	@if [ "$(update_flag)" = "false" ]; then \
-		echo "$(GREEN)>>> make: Nothing to be done for 'all'.$(DEF_COLOR)"; \
-	fi
-
-all : $(NAME) nothing_to_be_done
-
-# Flag to check if 'clean' is executed alone or as a dependency of 'fclean'
-fclean_flag := false
-do_fclean:
-	@$(eval fclean_flag := true)
-
-clean :
-	@echo "$(YELLOW)Cleaning $(NAME)... $(DEF_COLOR)"
-	@rm -rf $(OBJ_DIR)
-# Mute errors by redirecting to dev/null and ensure make re doesn't stop by returning true
-	-@rm *_shrubbery 2>/dev/null || true
-
-	@if [ "$(fclean_flag)" = "false" ]; then \
-		echo "$(GREEN)>>> $(NAME) object files cleaned!$(DEF_COLOR)"; \
-fi
-	@if [ "$(fclean_flag)" = "true" ]; then \
-		echo "$(GREEN)>>> $(NAME) object files & executables cleaned!$(DEF_COLOR)"; \
-fi
-
-fclean : do_fclean clean
-	@rm -f $(NAME)
-
-re :	fclean all
-	@echo "$(CYAN)Cleaned and rebuilt everything for $(NAME)!$(DEF_COLOR)"
-
-# Phony targets are used to differenciate makefile rules from system files.
-.PHONY: all clean fclean re nothing_to_be_done do_fclean

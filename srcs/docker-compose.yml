@@ -1,0 +1,19 @@
+version: '3.8'
+
+networks:
+  inception:
+    driver: bridge
+
+services:
+  nginx:
+    build: 
+      context: requirements/nginx/
+      args:
+        USER: ${LOGIN}
+    container_name: nginx
+    ports:
+      - "443:443"
+    networks:
+      - inception
+    restart: always
+    env_file: .env

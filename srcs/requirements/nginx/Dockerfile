@@ -11,6 +11,7 @@ RUN	apt update && apt install -y nginx openssl
 # The -p argument ensures the creation of parent directories with 777 permissions and no errors reported
 RUN	mkdir -p /run/nginx && mkdir -p /etc/nginx/ssl
 
+ARG USER
 # Generate a TLS certificate with the following options :
 #	-newkey rsa:4096	-> 4096-bit long key, generated via RSA algorithm
 #	-x509				-> generate a self-signed certificate (not issued by a certificate authority)
@@ -22,7 +23,7 @@ RUN	mkdir -p /run/nginx && mkdir -p /etc/nginx/ssl
 #	-subj				-> set the subject informations in a non-interactive way (no prompts during execution)
 RUN	openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
 	-out /etc/nginx/ssl/ssl_certificat.pem -keyout /etc/nginx/ssl/ssl_key.key \
-	-subj "/C=FR/ST=Nice/L=Nice/O=42Nice/OU=acosi/CN=acosi/"
+	-subj "/C=FR/ST=Nice/L=Nice/O=42Nice/OU=${USER}/CN=${USER}/"
 
 # Copy the configuration file for the nginx server
 COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
