@@ -17,7 +17,6 @@ obj/
 # Executables
 *.a
 *.out
-ircserv
 
 
 # MEMO : delete folder from remote :

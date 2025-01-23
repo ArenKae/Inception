@@ -4,14 +4,16 @@ FROM debian:bullseye
 # Commands to execute at container start :
 
 # Update and install the necessary packages
-RUN	apt update && apt install -y nginx openssl
+RUN	apt update -y && apt install -y nginx openssl
 
 # Create the run/nginx directory (required for the server to start),
 # as well as a directory for the ssl certificate (optional)
 # The -p argument ensures the creation of parent directories with 777 permissions and no errors reported
 RUN	mkdir -p /run/nginx && mkdir -p /etc/nginx/ssl
 
+# Declare a build-time variable to dynamically get the username
 ARG USER
+
 # Generate a TLS certificate with the following options :
 #	-newkey rsa:4096	-> 4096-bit long key, generated via RSA algorithm
 #	-x509				-> generate a self-signed certificate (not issued by a certificate authority)
@@ -26,7 +28,7 @@ RUN	openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
 	-subj "/C=FR/ST=Nice/L=Nice/O=42Nice/OU=${USER}/CN=${USER}/"
 
 # Copy the configuration file for the nginx server
-COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Command to execute by default once the container is started.
 # This syntax specifies that nginx must be launched with arguments -g daemon off.
