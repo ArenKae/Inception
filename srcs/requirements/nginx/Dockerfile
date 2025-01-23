@@ -11,9 +11,6 @@ RUN	apt update -y && apt install -y nginx openssl
 # The -p argument ensures the creation of parent directories with 777 permissions and no errors reported
 RUN	mkdir -p /run/nginx && mkdir -p /etc/nginx/ssl
 
-# Declare a build-time variable to dynamically get the username
-ARG USER
-
 # Generate a TLS certificate with the following options :
 #	-newkey rsa:4096	-> 4096-bit long key, generated via RSA algorithm
 #	-x509				-> generate a self-signed certificate (not issued by a certificate authority)
