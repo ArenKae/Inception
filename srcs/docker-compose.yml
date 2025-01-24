@@ -13,6 +13,30 @@ services:
     container_name: nginx
     ports:
       - "443:443"
+    depends_on:
+      - wordpress
+    networks:
+      - inception
+    restart: always
+    env_file: .env
+
+  mariadb:
+    build: 
+      context: requirements/mariadb/
+    container_name: mariadb
+    networks:
+      - inception
+    restart: always
+    env_file: .env
+
+  wordpress:
+    build: 
+      context: requirements/wordpress/
+    container_name: wordpress
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mariadb
     networks:
       - inception
     restart: always
