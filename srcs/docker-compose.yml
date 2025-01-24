@@ -4,6 +4,20 @@ networks:
   inception:
     driver: bridge
 
+volumes:
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/acosi/data/mysql
+      o: bind
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/acosi/data/wordpress
+      o: bind
+
 services:
   nginx:
     build: 
@@ -13,6 +27,8 @@ services:
     container_name: nginx
     ports:
       - "443:443"
+    volumes:
+      - wordpress_data:/var/www/html
     depends_on:
       - wordpress
     networks:
@@ -24,6 +40,8 @@ services:
     build: 
       context: requirements/mariadb/
     container_name: mariadb
+    volumes:
+      - mariadb_data:/var/lib/mysql
     networks:
       - inception
     restart: always
@@ -35,9 +53,13 @@ services:
     container_name: wordpress
     ports:
       - "9000:9000"
+    volumes:
+      - wordpress_data:/var/www/html
     depends_on:
       - mariadb
     networks:
       - inception
     restart: always
     env_file: .env
+
+  
