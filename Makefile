@@ -13,7 +13,7 @@ WHITE = \033[0;97m
 
 all :
 	@mkdir -p /home/acosi/data/mysql && mkdir -p /home/acosi/data/wordpress
-	docker-compose -f ./srcs/docker-compose.yml up --build -d
+	docker-compose -f ./srcs/docker-compose.yml up --build
 
 stop :
 	docker-compose -f ./srcs/docker-compose.yml stop

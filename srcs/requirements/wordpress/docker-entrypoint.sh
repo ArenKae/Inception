@@ -21,12 +21,12 @@ if [ ! -f wp-config.php ]; then
         --dbhost=mariadb:3306 \
         --allow-root
 	wp core install \
-    --url="https://localhost" \
-    --title="My WordPress Site" \
-    --admin_user="admin" \
-    --admin_password="admin_password" \
-    --admin_email="your_email@example.com" \
-    --allow-root
+    	--url="https://localhost" \
+   	 	--title="My WordPress Site" \
+   		--admin_user="admin" \
+   		--admin_password="admin_password" \
+    	--admin_email="your_email@example.com" \
+    	--allow-root
 else
     echo "wp-config.php already exists, skipping configuration."
 fi
