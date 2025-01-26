@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y \
     wget \
     php-fpm \
     php-mysql \
+	default-mysql-client \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -25,10 +26,16 @@ WORKDIR /var/www/html
 
 # Download and configure WordPress
 RUN wp core download --allow-root
-    #wp config create --dbname=wordpress --dbuser=root --dbpass=password --dbhost=db --allow-root
+
+# Copy the entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Expose PHP-FPM port
 EXPOSE 9000
+
+# Set the entrypoint
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 # Start PHP-FPM
 CMD ["php-fpm7.4"]

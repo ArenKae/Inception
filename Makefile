@@ -28,6 +28,7 @@ clean :
 	docker-compose -f ./srcs/docker-compose.yml down --volumes
 
 fclean : clean
+	sudo rm -rf /home/acosi/data
 	docker system prune -af
 
 re : fclean all

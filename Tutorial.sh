@@ -12,7 +12,7 @@ sudo docker run -it alpine:3.21 sh
 # Build a container from local dockerfile
 docker build -t image-name .
 
-# Rune a container from the specified image, opening the specified port
+# Run a container from the specified image, opening the specified port
 docker run -p 443:443 --name container-name image-name
 
 # Access the container's shell
