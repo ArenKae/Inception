@@ -2,7 +2,12 @@
 
 service mariadb start
 
-sleep 10
+# Wait until MariaDB is available (e.g., by pinging the server)
+echo "Waiting for MariaDB to start..."
+until mysqladmin ping -u root --silent 2>/dev/null; do
+  sleep 1
+done
+echo "MariaDB is up and running."
 
 mariadb -u root << EOF
 CREATE DATABASE IF NOT EXISTS $SQL_DATABASE;
@@ -13,10 +18,13 @@ SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$SQL_ROOT_PASSWORD');
 FLUSH PRIVILEGES;
 EOF
 
-sleep 5
-
 service mariadb stop
 
-sleep 5
+# Wait until MariaDB is actually stopped (check if the daemon is still running)
+echo "Waiting for MariaDB to stop..."
+while pidof mysqld >/dev/null 2>&1; do
+  sleep 1
+done
+echo "MariaDB has stopped."
 
 mysqld_safe

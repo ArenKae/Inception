@@ -23,9 +23,9 @@ if [ ! -f wp-config.php ]; then
 	wp core install \
     	--url="https://localhost" \
    	 	--title="My WordPress Site" \
-   		--admin_user="admin" \
-   		--admin_password="admin_password" \
-    	--admin_email="your_email@example.com" \
+   		--admin_user="${WP_USER}" \
+   		--admin_password="${WP_PASSWORD}" \
+    	--admin_email="${WP_MAIL}" \
     	--allow-root
 else
     echo "wp-config.php already exists, skipping configuration."
