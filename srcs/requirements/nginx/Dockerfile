@@ -28,7 +28,7 @@ RUN	openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
 	-subj "/C=FR/ST=Nice/L=Nice/O=42Nice/OU=${USER}/CN=${USER}/"
 
 # Copy the configuration file for the nginx server
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 
 # Command to execute by default once the container is started.
 # This syntax specifies that nginx must be launched with arguments -g daemon off.

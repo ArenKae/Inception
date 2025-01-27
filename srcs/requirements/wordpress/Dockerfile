@@ -28,14 +28,14 @@ WORKDIR /var/www/html
 RUN wp core download --allow-root
 
 # Copy the entrypoint script
-COPY docker-entrypoint.sh /usr/local/bin/
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+COPY tools/wordpress.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/wordpress.sh
 
 # Expose PHP-FPM port
 EXPOSE 9000
 
 # Set the entrypoint
-ENTRYPOINT ["docker-entrypoint.sh"]
+ENTRYPOINT ["wordpress.sh"]
 
 # Start PHP-FPM
 CMD ["php-fpm7.4"]
