@@ -23,8 +23,8 @@ if [ ! -f wp-config.php ]; then
 
 	echo "Installing Wordpress..."
 	wp core install \
-		--url="acosi.42.fr." \
-   	 	--title="My WordPress Site" \
+		--url="${WP_DOMAIN}" \
+   	 	--title="INCEPTION" \
    		--admin_user="${WP_ADMIN}" \
    		--admin_password="${WP_ADMIN_PASSWORD}" \
 		--admin_email="${WP_ADMIN_MAIL}" \

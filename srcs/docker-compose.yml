@@ -61,5 +61,3 @@ services:
       - inception
     restart: always
     env_file: .env
-
-  
