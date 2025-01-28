@@ -4,6 +4,7 @@ FROM debian:bullseye
 # Commands to execute at container start :
 
 # Update packages list and install the necessary packages
+# Clear the cache to reduce image size
 RUN	apt-get update -y && apt-get install -y nginx openssl \
 	&& apt-get clean \
 	&& rm -rf /var/lib/apt/lists/*

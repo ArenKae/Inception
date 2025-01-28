@@ -40,6 +40,5 @@ else
 	echo "wp-config.php already exists, skipping configuration."
 fi
 
-# Start PHP-FPM
 echo "Starting PHP-FPM..."
 exec "$@"

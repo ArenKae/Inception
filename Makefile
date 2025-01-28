@@ -13,20 +13,17 @@ WHITE = \033[0;97m
 NAME = Inception
 DOCKER_COMPOSE_FILE = ./srcs/docker-compose.yml
 DATA_DIRS = /home/acosi/data/mysql /home/acosi/data/wordpress
-ALREADY_UP := $(shell docker-compose -f $(DOCKER_COMPOSE_FILE) ps -q | wc -l)
 
 ### RULES ###
 
 all :
-	@if [ "$(ALREADY_UP)" = "3" ]; then \
-		docker-compose -f $(DOCKER_COMPOSE_FILE) up -d; \
-		echo "$(GREEN)>>> Nothing to be done for $(NAME).$(DEF_COLOR)"; \
-	else \
-		mkdir -p $(DATA_DIRS); \
-		docker-compose -f $(DOCKER_COMPOSE_FILE) up -d; \
-		timeout 6 docker-compose -f $(DOCKER_COMPOSE_FILE) logs -f || true; \
-		echo "$(GREEN)>>> $(NAME) built successfully!$(DEF_COLOR)"; \
-	fi
+	@mkdir -p $(DATA_DIRS)
+# Build and start the containers in detached mode to give the prompt back
+	@docker-compose -f $(DOCKER_COMPOSE_FILE) up -d
+# Print the logs during a timeout window of 10s, pipe true to supress makefile error
+	@timeout 10 docker-compose -f $(DOCKER_COMPOSE_FILE) logs -f || true
+	@echo "$(GREEN)>>> $(NAME) built successfully!$(DEF_COLOR)"
+
 
 stop :
 	@echo "$(YELLOW)>>> Stopping containers...$(DEF_COLOR)"
@@ -53,11 +50,11 @@ fclean : clean
 	@docker system prune -af
 
 re :
-	@echo "$(CYAN)>>> Rebuilding $(NAME) with --build...$(DEF_COLOR)"
 	@make fclean
+	@echo "$(CYAN)>>> Rebuilding $(NAME)...$(DEF_COLOR)"
 	@mkdir -p $(DATA_DIRS)
 	@docker-compose -f $(DOCKER_COMPOSE_FILE) up --build -d
-	@timeout 6 docker-compose -f $(DOCKER_COMPOSE_FILE) logs -f || true
+	@timeout 15 docker-compose -f $(DOCKER_COMPOSE_FILE) logs -f || true
 	@echo "$(GREEN)>>> $(NAME) rebuilt successfully!$(DEF_COLOR)"
 
 .PHONY: all stop start status clean fclean re
