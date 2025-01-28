@@ -3,10 +3,12 @@ FROM debian:bullseye
 
 # Commands to execute at container start :
 
-# Update and install the necessary packages
-RUN	apt update -y && apt install -y nginx openssl
+# Update packages list and install the necessary packages
+RUN	apt-get update -y && apt-get install -y nginx openssl \
+	&& apt-get clean \
+	&& rm -rf /var/lib/apt/lists/*
 
-# Create the run/nginx directory (required for the server to start),
+# Create the nginx directory (required for the server to start),
 # as well as a directory for the ssl certificate (optional)
 # The -p argument ensures the creation of parent directories with 777 permissions and no errors reported
 RUN	mkdir -p /run/nginx && mkdir -p /etc/nginx/ssl
@@ -30,7 +32,7 @@ RUN	openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
 # Copy the configuration file for the nginx server
 COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
 
-# Command to execute by default once the container is started.
+# Main command to execute once the container is started.
 # This syntax specifies that nginx must be launched with arguments -g daemon off.
 # Without this, nginx will run in the background and its execution will be considered as complete, resulting in docker terminating the container.
 ENTRYPOINT ["nginx", "-g", "daemon off;"]

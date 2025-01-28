@@ -9,6 +9,7 @@ until mysqladmin ping -u root --silent 2>/dev/null; do
 done
 echo "MariaDB is up and running."
 
+# Sets up the database, user accounts, and privileges.
 mariadb -u root << EOF
 CREATE DATABASE IF NOT EXISTS $SQL_DATABASE;
 CREATE USER IF NOT EXISTS '$SQL_USER'@'%' IDENTIFIED BY '$SQL_PASSWORD';
@@ -27,4 +28,5 @@ while pidof mysqld >/dev/null 2>&1; do
 done
 echo "MariaDB has stopped."
 
+# Restart MariaDB in safe mode, ensuring automatic restart in case it crashes
 mysqld_safe
