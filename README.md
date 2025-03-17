@@ -16,7 +16,7 @@ Finished 28/01/2025.
 
 Grade: 100/100
 
-# Initial setup
+## Initial setup
 
 ### Install docker
 ```
@@ -66,11 +66,11 @@ Check installed version :
 docker-compose --version
 ```
 
-## Usage
+# Usage
 Simply clone this repository and use ```make``` to build the project.
-Then, in your web browser, visit http://localhost and authorize the certifacte.
+Then, in your web browser, visit https://localhost and authorize the certifacte.
 
-## Other useful commands
+# Other useful commands
 
 Build a container from local dockerfile
 ```
