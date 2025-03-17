@@ -87,7 +87,8 @@ Access the container's shell
 docker exec -it container-name bash
 ```
 
-```Check mariadb
+Check mariadb
+```
 mysql -u root -p
 SHOW DATABASES;
 ```
