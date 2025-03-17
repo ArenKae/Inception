@@ -9,10 +9,6 @@ Docker is a containerization technology that allows applications to run in isola
 
 The Inception project focuses on building a fully containerized website using Docker and Docker Compose.  We will need to create a small network of 3 Docker containers each running different services (nginx, wordpress, mariaDB). All three must work together over the Docker network to create a local website.
 
-<p align="center">
-  <img src="https://github.com/ArenKae/ArenKae/blob/main/screens/IRC.PNG" alt="IRC demo">
-</p>
-
 ### 💻 This project was developed on Ubuntu 24.04.2 LTS.
 
 ## Status
