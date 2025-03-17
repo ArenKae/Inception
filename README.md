@@ -1,7 +1,7 @@
 # Inception
 
 <p align="center">
-  <img src="https://github.com/ArenKae/ArenKae/blob/main/42%20badges/inceptione.png" alt="ft_irc 42 project badge"/>
+  <img src="https://github.com/ArenKae/ArenKae/blob/main/42%20badges/inceptione.png" alt="inception 42 project badge"/>
 </p>
 
 ## An introduction to containerization
