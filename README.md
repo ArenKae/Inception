@@ -70,7 +70,7 @@ docker-compose --version
 Simply clone this repository and use ```make``` to build the project.
 Then, in your web browser, visit http://localhost and authorize the certifacte.
 
-## Useful Commands
+## Other useful commands
 
 Build a container from local dockerfile
 ```
