@@ -16,27 +16,61 @@ Finished 28/01/2025.
 
 Grade: 100/100
 
-## Usage
+# Initial setup
 
-Clone this repository and use ```make``` to build the project.
-
-## Useful Commands
-
-Install docker and other dependencies :
+### Install docker
 ```
-sudo apt-get install docker-ce docker-ce-cli docker-buildx-plugin docker-compose-plugin openssl python3-dev python3-distutils
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
 ```
 
-Add user to the docker group, allowing to use it without sudo (requires logout to take effect)
+Install the latest version :
+```
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+
+Test the installation:
+```
+sudo docker run hello-world
+```
+
+Add user to the docker group, allowing to use it without sudo (requires restart to take effect)
 ```
 sudo usermod -aG docker $USER
 ```
 
-Download and test the docker image for debian:buster and apline 3.21
+### Install docker-compose
+Download the latest version from GitHub in /usr/local/bin/docker-compose
 ```
-docker run -it debian:buster bash
-docker run -it alpine:3.21 sh
+sudo curl -L "https://github.com/docker/compose/releases/download/v2.34.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
+
+Make it executable :
+```
+sudo chmod +x /usr/local/bin/docker-compose
+```
+
+Check installed version :
+```
+docker-compose --version
+```
+
+## Usage
+Simply clone this repository and use ```make``` to build the project.
+Then, in your web browser, visit http://localhost and authorize the certifacte.
+
+## Useful Commands
 
 Build a container from local dockerfile
 ```
