@@ -12,9 +12,9 @@ The Inception project focuses on building a fully containerized website using Do
 ### 💻 This project was developed on Ubuntu 24.04.2 LTS.
 
 ## Status
-Finished 28/01/2025.
-
-Grade: 100/100
+✅ Completed on: 28/01/2025
+</br>
+🏆 Grade: 100/100
 
 ## Initial setup
 
