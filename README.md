@@ -45,10 +45,11 @@ Test the installation :
 sudo docker run hello-world
 ```
 
-Add user to the docker group, allowing to use it without sudo (requires restart to take effect)
-```
-sudo usermod -aG docker $USER
-```
+> [!TIP]
+> You can add an user to the docker group, allowing to use it without sudo (requires restart to take effect) :
+> ```
+> sudo usermod -aG docker $USER
+> ```
 
 ### Install docker-compose
 Download the latest version from GitHub in /usr/local/bin/docker-compose
