@@ -46,7 +46,7 @@ sudo docker run hello-world
 ```
 
 > [!TIP]
-> You can add a user to the docker group, allowing to use it without sudo (requires restart to take effect) :
+> You can add a user to the docker group, allowing them to use the command without sudo (requires restart to take effect) :
 > ```
 > sudo usermod -aG docker $USER
 > ```
