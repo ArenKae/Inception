@@ -69,7 +69,7 @@ docker-compose --version
 
 # Usage
 Simply clone this repository and use ```make``` to build the project.
-Then, in your web browser, visit https://localhost and authorize the certifacte.
+Then, in your web browser, visit https://localhost and authorize the certificate.
 
 # Other useful commands
 
